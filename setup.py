@@ -141,7 +141,7 @@ setup(
     platforms=["any"],
     classifiers=CLASSIFIERS,
     python_requires=">=3.5",
-    install_requires=["pymongo>=3.4, <4.0"],
+    install_requires=["pymongo>=3.4, <4.0", "greenlet==0.4.16"],
     cmdclass={"test": PyTest},
     **extra_opts
 )
