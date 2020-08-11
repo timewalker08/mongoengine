@@ -1,6 +1,8 @@
 from pymongo import MongoClient, ReadPreference, uri_parser
 from pymongo.database import _check_name
 
+from mongoengine.async_greenlet import GreenletClient
+
 __all__ = [
     "DEFAULT_CONNECTION_NAME",
     "DEFAULT_DATABASE_NAME",
@@ -302,9 +304,10 @@ def get_connection(alias=DEFAULT_CONNECTION_NAME, reconnect=False):
     if existing_connection:
         connection = existing_connection
     else:
-        connection = _create_connection(
-            alias=alias, connection_class=connection_class, **conn_settings
-        )
+        connection = GreenletClient.sync_connect(**conn_settings)
+        # connection = _create_connection(
+        #    alias=alias, connection_class=connection_class, **conn_settings
+        # )
     _connections[alias] = connection
     return _connections[alias]
 
